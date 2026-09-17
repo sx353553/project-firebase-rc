@@ -5,21 +5,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
 } from "firebase/auth";
+import Nav from "./components/Nav";
 
 function App() {
-  const [user, setUser] = React.useState({});
-  const [loading, setLoading] = React.useState(true);
- React.useEffect(() => {
-  setLoading(false);
-  onAuthStateChanged(auth, (user) => {
-    console.log(user);
-    if (user) {
-      setUser(user);
-    }
-  });
-}, []);
   function register() {
     console.log("register");
     createUserWithEmailAndPassword(auth, "email@email.com", "test123")
@@ -35,7 +24,6 @@ function App() {
     signInWithEmailAndPassword(auth, "email@email.com", "test123")
       .then(({ user }) => {
         console.log(user);
-        setUser(user);
       })
 
       .catch((error) => {
@@ -44,16 +32,14 @@ function App() {
   }
 
   function logout() {
+    console.log("logout clicked")
     signOut(auth);
-    setUser({});
+    console.log("signOut clicked")
   }
 
   return (
     <div className="App">
-      <button onClick={register}>Register</button>
-      <button onClick={login}>login</button>
-      <button onClick={logout}>logout</button>
-      {loading ? 'loading...' : user.email}
+      <Nav login={login} logout={logout} register={register} />
     </div>
   );
 }
