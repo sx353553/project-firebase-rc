@@ -2,7 +2,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { auth } from "../firebase/init";
 
-function Nav({ login, logout, register }) {
+function Nav({ login, logout, register, createPost }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -22,9 +22,12 @@ function Nav({ login, logout, register }) {
       {loading ? (
         <div className="skeleton-circle"></div>
       ) : user ? (
+        <>
         <div className="avatar-circle" onClick={logout}>
           {user.email[0].toUpperCase()}
         </div>
+        <button onClick={createPost}>Create Post </button>
+        </>
       ) : (
         <div>
           <button onClick={login}>login</button>

@@ -1,12 +1,22 @@
 import React from "react";
 import "./App.css";
-import { auth } from "./firebase/init";
+import { auth, db } from "./firebase/init";
+import { collection, addDoc } from "firebase/firestore"
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
 import Nav from "./components/Nav";
+
+function createPost () {
+  console.log("createPost was clicked")
+  const post = {
+    title:"Land a $400k job",
+    description:"Finish FrontEndSimplified",
+  };
+   addDoc(collection(db,"post"), post)
+}
 
 function App() {
   function register() {
@@ -39,7 +49,7 @@ function App() {
 
   return (
     <div className="App">
-      <Nav login={login} logout={logout} register={register} />
+      <Nav login={login} logout={logout} register={register} createPost={createPost} loading />
     </div>
   );
 }
