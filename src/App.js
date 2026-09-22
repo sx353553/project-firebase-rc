@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { auth, db } from "./firebase/init";
-import { collection, addDoc } from "firebase/firestore"
+import { collection, addDoc, getDocs } from "firebase/firestore"
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -15,8 +15,13 @@ function createPost () {
     title:"Land a $400k job",
     description:"Finish FrontEndSimplified",
   };
-   addDoc(collection(db,"post"), post)
+   addDoc(collection(db,"post"), post);
 }
+   async function getAllPost() {
+    const data = await getDocs(collection(db, "post"));
+    console.log(data);
+   }
+
 
 function App() {
   function register() {
@@ -49,7 +54,7 @@ function App() {
 
   return (
     <div className="App">
-      <Nav login={login} logout={logout} register={register} createPost={createPost} loading />
+      <Nav login={login} logout={logout} register={register} createPost={createPost} getAllPost={getAllPost} />
     </div>
   );
 }
