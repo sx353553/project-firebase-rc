@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { auth, db } from "./firebase/init";
-import { collection, addDoc, getDocs } from "firebase/firestore"
+import { collection, addDoc, getDocs, getDoc, doc } from "firebase/firestore"
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -18,9 +18,18 @@ function createPost () {
    addDoc(collection(db,"post"), post);
 }
    async function getAllPost() {
-    const data = await getDocs(collection(db, "post"));
-    console.log(data);
+    const { docs } = await getDocs(collection(db, "post"));
+    const posts = docs.map(elem => ({...elem.data(), id: elem.id }));
+    console.log(posts);
    }
+
+   async function getPostById() {
+  const hardcodedId = "8pblbq1KZl5cVnzL6rZc"; // your real ID
+  const postRef = doc(db, "post", hardcodedId);
+  const postSnap = await getDoc(postRef);
+  console.log(postSnap.data());
+}
+   
 
 
 function App() {
@@ -54,7 +63,7 @@ function App() {
 
   return (
     <div className="App">
-      <Nav login={login} logout={logout} register={register} createPost={createPost} getAllPost={getAllPost} />
+      <Nav login={login} logout={logout} register={register} createPost={createPost} getAllPost={getAllPost} getPostById={getPostById} />
     </div>
   );
 }
