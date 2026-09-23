@@ -2,7 +2,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { auth } from "../firebase/init";
 
-function Nav({ login, logout, register, createPost, getAllPost, getPostById, getPostByUid, updatePost, hardcodedId }) {
+function Nav({ login, logout, register, createPost, getAllPost, getPostById, getPostByUid, updatePost, hardcodedId, deletePost }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -31,6 +31,7 @@ function Nav({ login, logout, register, createPost, getAllPost, getPostById, get
         <button onClick={getPostById(hardcodedId)}>Get Post By Id</button>
         <button onClick={getPostByUid}>Get Post By Uid</button>
         <button onClick={updatePost}>Update Post</button>
+        <button onClick={deletePost}>Delete Post</button>
         </>
       ) : (
         <div>

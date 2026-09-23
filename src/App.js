@@ -10,6 +10,7 @@ import {
   query,
   where,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
@@ -66,6 +67,13 @@ async function updatePost() {
     .catch((error) => console.log("update failed:", error));
 }
 
+function deletePost() {
+  const hardcodedId = "8pblbq1KZl5cVnzL6rZc";
+    const postRef = doc(db, "post", hardcodedId);
+    deleteDoc(postRef);
+    
+}
+
 function App() {
   function register() {
     console.log("register");
@@ -106,6 +114,7 @@ function App() {
         getPostByUid={getPostByUid}
         updatePost={updatePost}
         hardcodedId={hardcodedId}
+        deletePost={deletePost}
       />
     </div>
   );
